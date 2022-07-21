@@ -1,6 +1,15 @@
 package ourProgramImprove.controlador.gestoresPojo;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import ourProgramImprove.controlador.Utils;
+import ourProgramImprove.modelo.Cliente;
+
 public class DaoCliente {
+	
 
 	//TODO SON CLASES COPIADAS DE OTRO PROYECTO, ESTAN SIN TOCAR
 	
@@ -77,7 +86,35 @@ public class DaoCliente {
 //	}
 //	 
 //-----------------------------------------------------------------------------------------------------------------	
-//	/**
+
+	public void insertar() throws ClassNotFoundException, IOException {
+		Cliente cliente = new Cliente();
+		try (Connection con = Utils.getConnection();
+				PreparedStatement pst = con.prepareStatement("INSERT INTO cliente (dni, nombre, apellido_uno, apellido_dos, contraseña) VALUES (?, ?, ?, ?, ?)");
+
+		) {
+		
+			pst.setString(1, cliente.getDni());
+			pst.setString(2, cliente.getNombre());
+			pst.setString(3, cliente.getApellidoUno());
+			pst.setString(4, cliente.getApellidoDos());
+			pst.setString(5, cliente.getContraseña());
+			
+			pst.executeUpdate();
+			
+			
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			System.out.println("Erros con la BBDD --- " +sqle);
+		} catch (NullPointerException npe) {
+			System.out.println("Null ponter --- " +npe);
+		} catch (Exception e) {
+			System.out.println("Error general --- " +e);
+		}
+	}
+	
+	
+	//	/**
 //	 * Pide por pantalla los datos de un alumno y lo inserta en la bbdd
 //	 * 
 //	 * @param sc2

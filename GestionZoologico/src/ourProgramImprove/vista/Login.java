@@ -1,5 +1,6 @@
 package ourProgramImprove.vista;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,12 +56,18 @@ public class Login {
 			}
 		});
 		
+		JLabel lError = new JLabel();
+		lError.setBounds(400, 250, 400, 20);
+		lError.setForeground(Color.RED);
+		login.add(lError);
+		
 		login.add(lDni);
 		login.add(lContraseña);
 		login.add(tDni);
 		login.add(tContraseña);
 		login.add(bLogin);
 		login.add(bRegistrar);
+		login.add(lError);
 		return login;
 	}
 
