@@ -60,6 +60,7 @@ public class Login {
 		login.add(tDni);
 		login.add(tContraseña);
 		login.add(bLogin);
+		login.add(bRegistrar);
 		return login;
 	}
 

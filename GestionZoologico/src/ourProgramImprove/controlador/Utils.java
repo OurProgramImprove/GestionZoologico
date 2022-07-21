@@ -15,7 +15,7 @@ public class Utils {
 		
 		Connection con = null;
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost:33060/gestion_formacion_elorriet?useSSL=false", "root", "elorrieta");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:33060/zoologico?useSSL=false", "root", "elorrieta");
 		} catch (SQLException e) {
 			System.out.println("ERROR de conexion");
 			e.printStackTrace();

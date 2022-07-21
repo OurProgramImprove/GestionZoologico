@@ -8,7 +8,8 @@ public class Main {
 		// TODO Auto-generated method stub
 		Frame frame = new Frame();
 		
-		frame.cambiarPanel(2);
+		frame.setVisible(true);
+		frame.cambiarPanel(1);
 
 	}
 

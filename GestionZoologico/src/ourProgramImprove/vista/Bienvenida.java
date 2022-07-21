@@ -20,8 +20,8 @@ public class Bienvenida {
 		
 		JLabel imagen = new JLabel();
 		imagen.setIcon(new ImageIcon("img/entradaZoologico.jpg"));
+		imagen.setBounds(0, 0, 600, 425);
 		bienvenida.add(imagen);
-		imagen.setBounds(0, -175, 1000, 1000);
 		
 		bienvenida.addMouseListener(new MouseListener() {
 			

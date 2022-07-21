@@ -12,7 +12,7 @@ public class Frame extends JFrame {
 
 	public Frame() {
 
-		setVisible(true);
+		
 		setBounds(0, 0, 1000, 650);
 		setTitle("GESTION ZOOLOGICOS");
 		setResizable(false);
