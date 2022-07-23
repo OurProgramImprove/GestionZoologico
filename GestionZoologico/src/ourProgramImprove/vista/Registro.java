@@ -5,17 +5,15 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.Date;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
-import com.toedter.calendar.JDateChooser;
 
 import ourProgramImprove.controlador.gestoresPojo.DaoCliente;
 import ourProgramImprove.modelo.Cliente;
@@ -29,7 +27,7 @@ public class Registro {
 	private JTextField Nombre;
 	private JTextField PrimerApellido;
 	private JTextField SegundoApellido;
-	private JDateChooser FechaNac;
+	//private JDateChooser FechaNac;
 
 	private static JLabel JLabelDni;
 	private static JLabel JLabelPassUno;
@@ -37,14 +35,12 @@ public class Registro {
 	private static JLabel JLabelNombre;
 	private static JLabel JLabelPrimerApellido;
 	private static JLabel JLabelSegundoApellido;
-	private static JLabel JLabelFechaNac;
-	private static JLabel JLabelCargo;
-	private static JComboBox<String> cargo;
+	//private static JLabel JLabelFechaNac;
 	private PanelTransparente panelTransparente;
 
 	public Registro() {
 
-		panelTransparente = new PanelTransparente(50, 30, 550, 550);
+		panelTransparente = new PanelTransparente(210, 60, 550, 460);
 	}
 
 	public Container mostrarRegistro(Frame frame) {
@@ -53,7 +49,7 @@ public class Registro {
 
 		panelRegistro = new JPanel();
 		panelRegistro.setBounds(0, 0, 1000, 650);
-		panelRegistro.setBackground(new Color(220, 197, 176));
+		// panelRegistro.setBackground(new Color(220, 197, 176));
 		panelRegistro.setLayout(null);
 
 		JLabelDni = new JLabel("DNI");
@@ -86,15 +82,15 @@ public class Registro {
 		;
 		panelTransparente.add(JLabelSegundoApellido);
 
-		JLabelFechaNac = new JLabel("Fecha nacimiento");
-		JLabelFechaNac.setBounds(50, 370, 180, 20);
-		;
-		panelTransparente.add(JLabelFechaNac);
-
-		JLabelCargo = new JLabel("Cargo");
-		JLabelCargo.setBounds(50, 420, 180, 20);
-		;
-		panelTransparente.add(JLabelCargo);
+//		JLabelFechaNac = new JLabel("Fecha nacimiento");
+//		JLabelFechaNac.setBounds(50, 370, 180, 20);
+//		;
+//		panelTransparente.add(JLabelFechaNac);
+//
+//		JLabelCargo = new JLabel("Cargo");
+//		JLabelCargo.setBounds(50, 420, 180, 20);
+//		;
+//		panelTransparente.add(JLabelCargo);
 
 		Dni = new JTextField();
 		Dni.setBounds(270, 80, 200, 20);
@@ -120,63 +116,169 @@ public class Registro {
 		SegundoApellido.setBounds(270, 330, 200, 20);
 		panelTransparente.add(SegundoApellido);
 
-		FechaNac = new JDateChooser("dd/MM/yyyy", "##/##/####", '_');
-		FechaNac.setBounds(270, 380, 200, 20);
-		FechaNac.setMaxSelectableDate(new Date());
-		panelTransparente.add(FechaNac);
+//		FechaNac = new JDateChooser("dd/MM/yyyy", "##/##/####", '_');
+//		FechaNac.setBounds(270, 380, 200, 20);
+//		FechaNac.setMaxSelectableDate(new Date());
+//		FechaNac.setEnabled(false);
+//		panelTransparente.add(FechaNac);
 
-		cargo = new JComboBox<String>();
-		cargo.setBounds(270, 430, 200, 20);
-		cargo.addItem("Empleado");
-		cargo.addItem("Director Local");
-		cargo.addItem("Director Provincial");
-
-		panelTransparente.add(cargo);
 		panelTransparente.setLayout(null);
-		panelTransparente.setBorder(BorderFactory.createLineBorder(Color.white, 2, true));
+		panelTransparente.setBorder(BorderFactory.createLineBorder(Color.black, 2, true));
 		panelRegistro.add(panelTransparente);
-		
-		
-		
-	
+
 		JButton btnRegistrar = new JButton("REGISTRAR USUARIO");
-		btnRegistrar.setBounds(670, 420, 200, 50);
+		btnRegistrar.setBounds(270, 400, 200, 30);
 		btnRegistrar.setForeground(Color.blue);
 		btnRegistrar.setBorder(BorderFactory.createLineBorder(Color.blue, 2, false));
 		btnRegistrar.addActionListener(new ActionListener() {
-			
+
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				cliente.setDni(Dni.getText().trim());
-				cliente.setNombre(Nombre.getText().trim());
-				cliente.setContraseña(PassUno.getText().trim());
-				cliente.setApellidoUno(PrimerApellido.getText().trim());
-				cliente.setApellidoDos(SegundoApellido.getText().trim());
-				// cliente.setFechaNac((FechaNac).getDate());
-				// cliente.setCargo((String) cargo.getSelectedItem());
 
-				DaoCliente daoCliente = new DaoCliente();
+				if (Dni.getText().isBlank() == true || Nombre.getText().isBlank() == true
+						|| PassUno.getText().isBlank() == true || PrimerApellido.getText().isBlank() == true
+						|| SegundoApellido.getText().isBlank() == true) {
 
-				try {
-					daoCliente.insertar(cliente);
-				} catch (ClassNotFoundException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Rellene todos los campos");
+				} else {
+
+					if (comprobarDni(Dni.getText().trim()) == false) {
+
+						if (comprobarPass(PassUno.getText().trim()) == false) {
+
+							cliente.setDni(Dni.getText().trim());
+							cliente.setNombre(Nombre.getText().trim());
+							cliente.setContraseña(PassUno.getText().trim());
+							cliente.setApellidoUno(PrimerApellido.getText().trim());
+							cliente.setApellidoDos(SegundoApellido.getText().trim());
+							// cliente.setFechaNac((FechaNac).getDate());
+
+							if (comprobarCliente(cliente) == true) {
+								JOptionPane.showMessageDialog(null, " El DNI ya se encuentra registrado.");
+							} else {
+
+								DaoCliente daoCliente = new DaoCliente();
+
+								try {
+									daoCliente.insertar(cliente);
+								} catch (ClassNotFoundException | IOException e1) {
+
+									e1.printStackTrace();
+								}
+							}
+						} else {
+							JOptionPane.showMessageDialog(null, "Contraseña 8 o más caracteres.");
+						}
+					} else {
+
+						JOptionPane.showMessageDialog(null, "DNI incorrecto");
+					}
 				}
-				
+			}
+
+		});
+		panelTransparente.add(btnRegistrar);
+
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.setBounds(20, 20, 100, 20);
+		btnVolver.setBorder(BorderFactory.createLineBorder(Color.gray, 2, false));
+		btnVolver.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiarPanel(2);
+
 			}
 		});
-			
-		panelRegistro.add(btnRegistrar);
-		
-
-		
-		
-			
-		
-
+		panelRegistro.add(btnVolver);
 		return panelRegistro;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	// TODO MOVER METODO A ALGUNA CLASE GESTOR
+	private boolean comprobarDni(String dni) {
+
+		boolean error = false;
+
+		char[] abecedario = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q',
+				'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+
+		if (dni.length() == 9) {
+
+			for (int i = 0; i < dni.length(); i++) {
+				if ((Character.isDigit(dni.charAt(i)) == true) && (i < 8)) {
+					error = false;
+				} else if (i == 8) {
+					break;
+				} else {
+					error = true;
+				}
+			}
+
+			if (error == false) {
+
+				for (int j = 0; j < abecedario.length; j++) {
+
+					if (Character.toUpperCase(dni.charAt(8)) == abecedario[j]) {
+						error = false;
+						break;
+					} else {
+						error = true;
+					}
+				}
+			}
+		} else {
+
+			error = true;
+		}
+
+		return error;
+	}
+
+	// TODO MOVER A CLASE GESTOR
+	private boolean comprobarPass(String pass) {
+
+		boolean error = false;
+		int passLenght = pass.length();
+		if (passLenght < 8) {
+			error = true;
+		}
+		return error;
+	}
+
+	// TODO MOVER A CLASE GESTOR
+	private boolean comprobarCliente(Cliente clientePantalla) {
+
+		//DaoCliente daoCliente = new DaoCliente();
+		Boolean existe = false;
+		ArrayList<Cliente> arrayListUsuario = new ArrayList<Cliente>();
+		// arrayListUsuario = daoCliente.readClientes();
+
+		for (int i = 0; i < arrayListUsuario.size(); i++) {
+			Cliente cliente = arrayListUsuario.get(i);
+			if (clientePantalla.getDni().equals(cliente.getDni())) {
+
+				existe = true;
+				break;
+			}
+		}
+
+		return existe;
+
 	}
 
 }
