@@ -87,8 +87,8 @@ public class DaoCliente {
 //	 
 //-----------------------------------------------------------------------------------------------------------------	
 
-	public void insertar() throws ClassNotFoundException, IOException {
-		Cliente cliente = new Cliente();
+	public void insertar(Cliente cliente) throws ClassNotFoundException, IOException {
+		//Cliente cliente = new Cliente();
 		try (Connection con = Utils.getConnection();
 				PreparedStatement pst = con.prepareStatement("INSERT INTO cliente (dni, nombre, apellido_uno, apellido_dos, contraseña) VALUES (?, ?, ?, ?, ?)");
 

@@ -47,8 +47,7 @@ public class Login {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				Frame frame = new Frame();
+
 				frame.cambiarPanel(3);
 				
 				tDni.setText(null);

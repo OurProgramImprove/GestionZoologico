@@ -2,9 +2,13 @@ package ourProgramImprove.vista;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,6 +17,7 @@ import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
 
+import ourProgramImprove.controlador.gestoresPojo.DaoCliente;
 import ourProgramImprove.modelo.Cliente;
 
 public class Registro {
@@ -130,6 +135,46 @@ public class Registro {
 		panelTransparente.setLayout(null);
 		panelTransparente.setBorder(BorderFactory.createLineBorder(Color.white, 2, true));
 		panelRegistro.add(panelTransparente);
+		
+		
+		
+	
+		JButton btnRegistrar = new JButton("REGISTRAR USUARIO");
+		btnRegistrar.setBounds(670, 420, 200, 50);
+		btnRegistrar.setForeground(Color.blue);
+		btnRegistrar.setBorder(BorderFactory.createLineBorder(Color.blue, 2, false));
+		btnRegistrar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				cliente.setDni(Dni.getText().trim());
+				cliente.setNombre(Nombre.getText().trim());
+				cliente.setContraseña(PassUno.getText().trim());
+				cliente.setApellidoUno(PrimerApellido.getText().trim());
+				cliente.setApellidoDos(SegundoApellido.getText().trim());
+				// cliente.setFechaNac((FechaNac).getDate());
+				// cliente.setCargo((String) cargo.getSelectedItem());
+
+				DaoCliente daoCliente = new DaoCliente();
+
+				try {
+					daoCliente.insertar(cliente);
+				} catch (ClassNotFoundException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+			
+		panelRegistro.add(btnRegistrar);
+		
+
+		
+		
+			
+		
 
 		return panelRegistro;
 	}
