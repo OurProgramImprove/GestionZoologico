@@ -263,10 +263,10 @@ public class Registro {
 	// TODO MOVER A CLASE GESTOR
 	private boolean comprobarCliente(Cliente clientePantalla) {
 
-		//DaoCliente daoCliente = new DaoCliente();
+		DaoCliente daoCliente = new DaoCliente();
 		Boolean existe = false;
 		ArrayList<Cliente> arrayListUsuario = new ArrayList<Cliente>();
-		// arrayListUsuario = daoCliente.readClientes();
+		arrayListUsuario = daoCliente.listarUsuarios();
 
 		for (int i = 0; i < arrayListUsuario.size(); i++) {
 			Cliente cliente = arrayListUsuario.get(i);

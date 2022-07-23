@@ -3,118 +3,77 @@ package ourProgramImprove.controlador.gestoresPojo;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import ourProgramImprove.controlador.Utils;
 import ourProgramImprove.modelo.Cliente;
 
 public class DaoCliente {
-	
 
-	//TODO SON CLASES COPIADAS DE OTRO PROYECTO, ESTAN SIN TOCAR
-	
-	
-//	 /**
-//	 * Lista los alumnos de la bbdd clase
-//	 */
-//	public void listar() {
-//
-//		int i = 0;
-//		String sql = "SELECT id_alumno, nombre, email FROM clase.alumno ORDER BY id_alumno ASC;";
-//
-//		try (Connection con = Conexion.getConnection();
-//				PreparedStatement pst = con.prepareStatement(sql);
-//				ResultSet rs = pst.executeQuery();
-//
-//		) {
-//
-//			System.out.println("-------------------------------------------------------------------------------");
-//			System.out.println(" ID        nombre                email");
-//			System.out.println("-------------------------------------------------------------------------------");
-//			while (rs.next()) {
-//
-//				int id = rs.getInt("id_alumno");
-//				String nombre = rs.getString("nombre");
-//				String email = rs.getString("email");
-//				System.out.printf(" %-10s %-17s %5s \n", id, nombre, email);
-//
-//				i++;
-//			} // while
-//
-//			System.out.println("\n+---------------------- TOTAL " + i + " Alumnos -------------------+\n\n");
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//	}
-//
-//	/**
-//	 * Busca el id del alumno en la BBDD
-//	 * @param id recibe un id de alumno que mete el usuario
-//	 * @return true si el id existe, false si no existe
-//	 */
-//	public boolean buscarId(int id) {
-//
-//		int i = 0;
-//		boolean encontrado = false;
-//		String sql = "SELECT id_alumno, nombre, email FROM clase.alumno ORDER BY id_alumno ASC;";
-//
-//		try (Connection con = Conexion.getConnection();
-//				PreparedStatement pst = con.prepareStatement(sql);
-//				ResultSet rs = pst.executeQuery();
-//
-//		) {
-//
-//			while (rs.next()) {
-//
-//				if (id == rs.getInt("id_alumno")) {
-//					encontrado = true;
-//				} else {
-//					encontrado = false;
-//				}
-//
-//			} // while
-//
-//		} catch (SQLException sqle) {
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		return encontrado;
-//	}
-//	 
-//-----------------------------------------------------------------------------------------------------------------	
+	// TODO SON CLASES COPIADAS DE OTRO PROYECTO, ESTAN SIN TOCAR
 
-	public void insertar(Cliente cliente) throws ClassNotFoundException, IOException {
-		//Cliente cliente = new Cliente();
+	public ArrayList<Cliente> listarUsuarios() {
+		ArrayList<Cliente> empleados = null;
+		Cliente cliente;
+		String sql = "SELECT * FROM cliente;";
+
 		try (Connection con = Utils.getConnection();
-				PreparedStatement pst = con.prepareStatement("INSERT INTO cliente (dni, nombre, apellido_uno, apellido_dos, contraseña) VALUES (?, ?, ?, ?, ?)");
+				PreparedStatement pst = con.prepareStatement(sql);
+				ResultSet rs = pst.executeQuery();
 
 		) {
-		
+
+			empleados = new ArrayList<Cliente>();
+
+			while (rs.next()) {
+				cliente = new Cliente();
+
+				cliente.setDni(rs.getString("dni"));
+				cliente.setNombre(rs.getString("nombre"));
+				cliente.setApellidoUno(rs.getString("apellido_uno"));
+				cliente.setApellidoDos(rs.getString("apellido_dos"));
+				cliente.setContraseña(rs.getString("contraseña"));
+
+				empleados.add(cliente);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return empleados;
+
+	}
+
+	public void insertar(Cliente cliente) throws ClassNotFoundException, IOException {
+		// Cliente cliente = new Cliente();
+		try (Connection con = Utils.getConnection();
+				PreparedStatement pst = con.prepareStatement(
+						"INSERT INTO cliente (dni, nombre, apellido_uno, apellido_dos, contraseña) VALUES (?, ?, ?, ?, ?)");
+
+		) {
+
 			pst.setString(1, cliente.getDni());
 			pst.setString(2, cliente.getNombre());
 			pst.setString(3, cliente.getApellidoUno());
 			pst.setString(4, cliente.getApellidoDos());
 			pst.setString(5, cliente.getContraseña());
-			
+
 			pst.executeUpdate();
-			
-			
+
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
-			System.out.println("Erros con la BBDD --- " +sqle);
+			System.out.println("Erros con la BBDD --- " + sqle);
 		} catch (NullPointerException npe) {
-			System.out.println("Null ponter --- " +npe);
+			System.out.println("Null ponter --- " + npe);
 		} catch (Exception e) {
-			System.out.println("Error general --- " +e);
+			System.out.println("Error general --- " + e);
 		}
 	}
-	
-	
-	//	/**
+
+	// /**
 //	 * Pide por pantalla los datos de un alumno y lo inserta en la bbdd
 //	 * 
 //	 * @param sc2
@@ -301,5 +260,5 @@ public class DaoCliente {
 //		
 //
 //	}// Update
-	
+
 }
