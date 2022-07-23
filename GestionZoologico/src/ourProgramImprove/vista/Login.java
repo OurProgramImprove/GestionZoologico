@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -51,7 +52,10 @@ public class Login {
 				if(tDni.getText().length() == 0 || tContraseña.getText().length() == 0) {
 					lError.setText("No se ha insertado texto en el campo");
 				} else {
-					ArrayList<Cliente> usuarios = todosLosEmpleados.listarUsuarios(); 
+					ArrayList<Cliente> usuarios;
+					try {
+						usuarios = todosLosEmpleados.listarUsuarios();
+					
 					if(usuarios != null) {
 						for(Cliente cliente : usuarios) {
 							if(!gestorUsuarios.esAdmin(tDni.getText())) {
@@ -77,7 +81,11 @@ public class Login {
 					} else {
 						lError.setText("No hay usuarios en la BBDD");
 					}
-				}
+					} catch (ClassNotFoundException | IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} 
+				}///////////////////
 			}
 		});
 

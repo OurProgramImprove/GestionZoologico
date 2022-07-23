@@ -14,7 +14,7 @@ public class DaoCliente {
 
 	// TODO SON CLASES COPIADAS DE OTRO PROYECTO, ESTAN SIN TOCAR
 
-	public ArrayList<Cliente> listarUsuarios() {
+	public ArrayList<Cliente> listarUsuarios() throws ClassNotFoundException, IOException{
 		ArrayList<Cliente> empleados = null;
 		Cliente cliente;
 		String sql = "SELECT * FROM cliente;";
@@ -39,9 +39,14 @@ public class DaoCliente {
 				empleados.add(cliente);
 			}
 
-		} catch (SQLException e) {
+		} catch (SQLException sqle) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			sqle.printStackTrace();
+			System.out.println("Erros con la BBDD --- " + sqle);
+		} catch (NullPointerException npe) {
+			System.out.println("Null ponter --- " + npe);
+		} catch (Exception e) {
+			System.out.println("Error general --- " + e);
 		}
 		return empleados;
 
@@ -259,6 +264,6 @@ public class DaoCliente {
 //		} 
 //		
 //
-//	}// Update
+//	} Update
 
 }

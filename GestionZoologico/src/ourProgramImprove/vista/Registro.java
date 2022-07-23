@@ -266,7 +266,12 @@ public class Registro {
 		DaoCliente daoCliente = new DaoCliente();
 		Boolean existe = false;
 		ArrayList<Cliente> arrayListUsuario = new ArrayList<Cliente>();
-		arrayListUsuario = daoCliente.listarUsuarios();
+		try {
+			arrayListUsuario = daoCliente.listarUsuarios();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ClassNotFound");
+		}
 
 		for (int i = 0; i < arrayListUsuario.size(); i++) {
 			Cliente cliente = arrayListUsuario.get(i);
