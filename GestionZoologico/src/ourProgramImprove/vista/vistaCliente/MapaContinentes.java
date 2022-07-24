@@ -1,4 +1,4 @@
-package ourProgramImprove.vista;
+package ourProgramImprove.vista.vistaCliente;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -21,10 +21,16 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+
 
 import ourProgramImprove.controlador.gestoresPojo.DaoContinente;
+import ourProgramImprove.controlador.gestoresPojo.DaoPais;
 import ourProgramImprove.modelo.Continente;
 import ourProgramImprove.modelo.Pais;
+import ourProgramImprove.vista.Frame;
 
 public class MapaContinentes {
 	private JToolBar toolBar;
@@ -36,15 +42,14 @@ public class MapaContinentes {
 	private DefaultListModel<Pais> modeloPais;
 
 	private JRadioButton radioConti;
-	private JRadioButton radioPaises;
+	private JLabel labelPaises;
 	private JLabel fondo;
 	private JLabel titulo;
 
-
-	JPanel continentes;
+	private JPanel continentes;
 	private ImageIcon fondoInicio2 = new ImageIcon("img\\mapa.png");
 
-	public Container mostrarContinentes(Frame frame)  {
+	public Container mostrarContinentes(Frame frame) {
 
 		continentes = new JPanel();
 		continentes.setBounds(0, 0, 1000, 650);
@@ -64,10 +69,7 @@ public class MapaContinentes {
 		radioConti.setFont(new Font("Goudy Stout", 10, 12));
 		radioConti.setOpaque(false);
 
-		radioPaises = new JRadioButton("Mostrar Países");
-		radioPaises.setBounds(560, 200, 230, 30);
-		radioPaises.setFont(new Font("Goudy Stout", 10, 12));
-		radioPaises.setOpaque(false);
+		labelPaises = new JLabel("Mostrar Países");
 
 		listaConti = new JList<>();
 		modeloConti = new DefaultListModel<Continente>();
@@ -76,6 +78,28 @@ public class MapaContinentes {
 		listaConti.setOpaque(false);
 		listaConti.setBounds(175, 260, 180, 250);
 
+		listaConti.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+
+				labelPaises.setBounds(560, 200, 230, 30);
+				labelPaises.setFont(new Font("Goudy Stout", 10, 12));
+				labelPaises.setOpaque(false);
+				
+				DaoPais daoPais = new DaoPais();
+				ArrayList<Pais> arrayPaises = new ArrayList<>();
+
+				daoPais.leerPaises(listaConti.getSelectedValue().getIdContinente());
+
+				for (int i = 0; i < arrayPaises.size(); i++) {
+					modeloPais.addElement(arrayPaises.get(i));
+				}
+
+				listaPaises.setModel(modeloPais);
+
+			}
+		});
 		DaoContinente daoContinente = new DaoContinente();
 		ArrayList<Continente> arrayContinentes = null;
 
@@ -95,41 +119,27 @@ public class MapaContinentes {
 		listaPaises.setOpaque(false);
 		listaPaises.setBounds(450, 260, 180, 250);
 
-//		DaoPais daoPais = new DaoPais();
-//		ArrayList<Pais> arrayPaises = null;
-//
-//		
-//		
-//		arrayPaises = daoPais.leerPaises(listaConti.getSelectedValue().getNombre());
-//		
-//		for (int i = 0; i < arrayPaises.size(); i++) {
-//			modeloPais.addElement(arrayPaises.get(i));
-//		}
-
-		
 		radioConti.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
+
 				listaConti.setModel(modeloConti);
 			}
 		});
 
-		radioPaises.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-
-				listaPaises.setModel(modeloPais);
-
-			}
-		});
-
-		// JLISTTTTTTTTTTTTTTT
 
 		JButton btnCiudades = new JButton("Ver Ciudades");
 		btnCiudades.setBounds(760, 5, 120, 20);
 		btnCiudades.setOpaque(true);
+		btnCiudades.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			frame.cambiarPanel(7);
+				
+			}
+		});
 
 		toolBar = new JToolBar();
 		toolBar.setBounds(0, 0, 1000, 30);
@@ -150,18 +160,14 @@ public class MapaContinentes {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				frame.cambiarPanel(4);
 			}
 		});
 		toolBar.add(btnAtras);
 		toolBar.add(btnCiudades);
 
 		continentes.add(radioConti);
-		continentes.add(radioPaises);
 		continentes.add(listaConti);
-		// continentes.add(btnCiudades);
-		// siguiente.add
-
 		continentes.add(toolBar);
 		continentes.add(titulo);
 		continentes.add(fondo);

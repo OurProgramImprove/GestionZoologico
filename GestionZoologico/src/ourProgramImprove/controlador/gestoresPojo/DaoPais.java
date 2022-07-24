@@ -12,12 +12,12 @@ import ourProgramImprove.modelo.Pais;
 
 public class DaoPais {
 
-	public ArrayList<Pais> leerPaises(String nombre) {
+	public ArrayList<Pais> leerPaises(int idContinente) {
 
 		ArrayList<Pais> paises = null;
 		Pais pais;
 		String sql = "SELECT P.nombre FROM pais P join continente C on P.id_continente = C.id_continente "
-				+ "	WHERE id_continente='" + nombre + "'";
+				+ "	WHERE P.id_continente='" + idContinente + "'";
 
 		try (Connection con = Utils.getConnection();
 				PreparedStatement pst = con.prepareStatement(sql);
@@ -30,6 +30,7 @@ public class DaoPais {
 			while (rs.next()) {
 				pais = new Pais();
 
+				pais.setIdPais(rs.getInt("id_pais")); // NO ENCUENTRA ID_PAIS porque
 				pais.setNombre(rs.getString("nombre"));
 
 				paises.add(pais);

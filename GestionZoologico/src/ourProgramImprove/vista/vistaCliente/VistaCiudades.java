@@ -13,25 +13,23 @@ import javax.swing.JToolBar;
 
 import ourProgramImprove.vista.Frame;
 
-public class ClienteMenu {
+public class VistaCiudades {
+	JPanel ciudades;
+	JToolBar toolBar;
+	public Container mostrarVistaCiudades(Frame frame) {
 
-	private JToolBar toolBar;
-	JPanel vistaMenuCliente;
+		ciudades = new JPanel();
+		ciudades.setBounds(0, 0, 1000, 650);
+		ciudades.setBackground(Color.pink);
+		ciudades.setLayout(null);
 
-	public Container mostrarClienteMenu(Frame frame) {
-
-		vistaMenuCliente = new JPanel();
-		vistaMenuCliente.setBounds(0, 0, 1000, 650);
-		vistaMenuCliente.setBackground(Color.red);
-		vistaMenuCliente.setLayout(null);
-
-		JLabel label = new JLabel("MENU CLIENTE");
+		JLabel label = new JLabel("VISTA CIUDADES");
 		label.setBounds(560, 200, 230, 30);
 		label.setFont(new Font("Goudy Stout", 10, 12));
 		label.setOpaque(false);
-		vistaMenuCliente.add(label);
+		ciudades.add(label);
 
-		toolBar = new JToolBar();
+		toolBar = new JToolBar("se mostraran las ciudades");
 		toolBar.setBounds(0, 0, 1000, 30);
 		toolBar.setLayout(null);
 		toolBar.setFloatable(false);
@@ -43,25 +41,21 @@ public class ClienteMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.cambiarPanel(2);
+				frame.cambiarPanel(5);
 			}
 		});
 		toolBar.add(btnAtras);
-		JButton verContinentes = new JButton("Ver Continentes");
-		verContinentes.setBounds(760, 5, 120, 20);
-		verContinentes.setOpaque(true);
-		verContinentes.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.cambiarPanel(5);
-
-			}
-		});
-		toolBar.add(verContinentes);
-		vistaMenuCliente.add(toolBar);
-
-		return vistaMenuCliente;
+		ciudades.add(toolBar);
+		return ciudades;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

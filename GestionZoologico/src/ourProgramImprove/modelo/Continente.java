@@ -54,7 +54,7 @@ public class Continente {
 	public String toString() {
 		// return "Continente [idContinente=" + idContinente + ", nombre=" + nombre +
 		// "]";
-		return nombre + "       " + idContinente;
+		return nombre ;
 	}
 
 }

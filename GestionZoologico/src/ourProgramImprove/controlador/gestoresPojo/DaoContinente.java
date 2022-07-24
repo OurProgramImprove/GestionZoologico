@@ -28,6 +28,7 @@ public class DaoContinente {
 			while (rs.next()) {
 				continente = new Continente();
 
+				continente.setIdContinente(rs.getInt("id_continente"));
 				continente.setNombre(rs.getString("nombre"));
 
 				continentes.add(continente);

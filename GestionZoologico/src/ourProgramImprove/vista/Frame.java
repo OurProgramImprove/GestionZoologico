@@ -5,6 +5,8 @@ import javax.swing.JOptionPane;
 
 import ourProgramImprove.vista.vistaAdmin.AdminMenu;
 import ourProgramImprove.vista.vistaCliente.ClienteMenu;
+import ourProgramImprove.vista.vistaCliente.MapaContinentes;
+import ourProgramImprove.vista.vistaCliente.VistaCiudades;
 
 public class Frame extends JFrame {
 
@@ -12,17 +14,16 @@ public class Frame extends JFrame {
 	public final int BIENVENIDA = 1;
 	public final int LOGIN = 2;
 	public final int REGISTRO = 3;
-	public final int CONTINENTES = 4;
-	/*CLIENTES*/
-	public final int MENU_CLIENTE = 5;
-	
-	/*ADMINISTRADORES*/
+
+	/* CLIENTES */
+	public final int MENU_CLIENTE = 4;
+	public final int CONTINENTES = 5;
+	public final int CIUDADES = 7;
+	/* ADMINISTRADORES */
 	public final int MENU_ADMIN = 6;
-	
-	
+
 	public Frame() {
 
-		
 		setBounds(0, 0, 1000, 650);
 		setTitle("GESTION ZOOLOGICOS");
 		setResizable(false);
@@ -43,19 +44,21 @@ public class Frame extends JFrame {
 		case REGISTRO:
 			this.setContentPane(new Registro().mostrarRegistro(this));
 			break;
-		case CONTINENTES:
-			this.setContentPane(new MapaContinentes().mostrarContinentes(this));
-			break;
-		/* AQUI VAN LAS VENTANAS DEL CLIENTE*/
+		/* AQUI VAN LAS VENTANAS DEL CLIENTE */
 		case MENU_CLIENTE:
 			this.setContentPane(new ClienteMenu().mostrarClienteMenu(this));
 			break;
-			
-		/* AQUI VAN LAS VENTANAS DEL ADMIN*/
+		case CONTINENTES:
+			this.setContentPane(new MapaContinentes().mostrarContinentes(this));
+			break;
+		case CIUDADES:
+			this.setContentPane(new VistaCiudades().mostrarVistaCiudades(this));
+			break;
+		/* AQUI VAN LAS VENTANAS DEL ADMIN */
 		case MENU_ADMIN:
 			this.setContentPane(new AdminMenu().mostrarAdminMenu(this));
 			break;
-		
+
 		default:
 			JOptionPane.showMessageDialog(new Frame(), "No exista la ventana a la que desea acceder");
 
