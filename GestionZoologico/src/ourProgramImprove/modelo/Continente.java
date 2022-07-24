@@ -52,7 +52,9 @@ public class Continente {
 
 	@Override
 	public String toString() {
-		return "Continente [idContinente=" + idContinente + ", nombre=" + nombre + "]";
+		// return "Continente [idContinente=" + idContinente + ", nombre=" + nombre +
+		// "]";
+		return nombre + "       " + idContinente;
 	}
 
 }

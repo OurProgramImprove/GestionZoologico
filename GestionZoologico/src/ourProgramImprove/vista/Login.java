@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 
 import ourProgramImprove.controlador.gestor.GestorUsuarios;
 import ourProgramImprove.controlador.gestoresPojo.DaoCliente;
@@ -25,6 +26,7 @@ public class Login {
 		login.setBounds(0, 0, 1000, 650);
 		login.setLayout(null);
 		
+
 		JLabel lError = new JLabel();
 		lError.setBounds(500, 370, 400, 20);
 		lError.setForeground(Color.RED);
@@ -111,6 +113,8 @@ public class Login {
 		login.add(bLogin);
 		login.add(bRegistrar);
 		login.add(lError);
+		
+		
 		return login;
 	}
 

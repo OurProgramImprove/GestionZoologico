@@ -9,7 +9,7 @@ public class Frame extends JFrame {
 	public final int BIENVENIDA = 1;
 	public final int LOGIN = 2;
 	public final int REGISTRO = 3;
-
+	public final int CONTINENTES = 4;
 	public Frame() {
 
 		
@@ -32,6 +32,9 @@ public class Frame extends JFrame {
 			break;
 		case REGISTRO:
 			this.setContentPane(new Registro().mostrarRegistro(this));
+			break;
+		case CONTINENTES:
+			this.setContentPane(new MapaContinentes().mostrarContinentes(this));
 			break;
 		/* AQUI VAN LAS VENTANAS DEL CLIENTE Y DEL ADMIN */
 		default:
