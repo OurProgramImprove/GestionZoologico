@@ -8,6 +8,7 @@ public class Zoo {
 	private int idZoo = 0;
 	private String nombre = null;
 	private int tamaño = 0;
+	private float presupuesto = 0;
 	private Time hApertura = null;
 	private Time hCierre = null;
 	private float pvpEntrada = 0;
@@ -17,11 +18,13 @@ public class Zoo {
 		super();
 	}
 
-	public Zoo(int idZoo, String nombre, int tamaño, Time hApertura, Time hCierre, float pvpEntrada, int ciudadZoo) {
+	public Zoo(int idZoo, String nombre, int tamaño, float presupuesto, Time hApertura, Time hCierre, float pvpEntrada,
+			int ciudadZoo) {
 		super();
 		this.idZoo = idZoo;
 		this.nombre = nombre;
 		this.tamaño = tamaño;
+		this.presupuesto = presupuesto;
 		this.hApertura = hApertura;
 		this.hCierre = hCierre;
 		this.pvpEntrada = pvpEntrada;
@@ -30,7 +33,7 @@ public class Zoo {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ciudadZoo, idZoo, nombre, pvpEntrada, tamaño);
+		return Objects.hash(ciudadZoo, hApertura, hCierre, idZoo, nombre, presupuesto, pvpEntrada, tamaño);
 	}
 
 	@Override
@@ -42,7 +45,10 @@ public class Zoo {
 		if (getClass() != obj.getClass())
 			return false;
 		Zoo other = (Zoo) obj;
-		return ciudadZoo == other.ciudadZoo && idZoo == other.idZoo && Objects.equals(nombre, other.nombre)
+		return ciudadZoo == other.ciudadZoo && Objects.equals(hApertura, other.hApertura)
+				&& Objects.equals(hCierre, other.hCierre) && idZoo == other.idZoo
+				&& Objects.equals(nombre, other.nombre)
+				&& Float.floatToIntBits(presupuesto) == Float.floatToIntBits(other.presupuesto)
 				&& Float.floatToIntBits(pvpEntrada) == Float.floatToIntBits(other.pvpEntrada) && tamaño == other.tamaño;
 	}
 
@@ -68,6 +74,14 @@ public class Zoo {
 
 	public void setTamaño(int tamaño) {
 		this.tamaño = tamaño;
+	}
+
+	public float getPresupuesto() {
+		return presupuesto;
+	}
+
+	public void setPresupuesto(float presupuesto) {
+		this.presupuesto = presupuesto;
 	}
 
 	public Time gethApertura() {
@@ -104,8 +118,9 @@ public class Zoo {
 
 	@Override
 	public String toString() {
-		return "Zoo [idZoo=" + idZoo + ", nombre=" + nombre + ", tamaño=" + tamaño + ", pvpEntrada=" + pvpEntrada
-				+ ", ciudadZoo=" + ciudadZoo + "]";
+		return "Zoo [idZoo=" + idZoo + ", nombre=" + nombre + ", tamaño=" + tamaño + ", presupuesto=" + presupuesto
+				+ ", hApertura=" + hApertura + ", hCierre=" + hCierre + ", pvpEntrada=" + pvpEntrada + ", ciudadZoo="
+				+ ciudadZoo + "]";
 	}
 
 }
