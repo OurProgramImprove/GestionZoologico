@@ -5,7 +5,6 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import ourProgramImprove.controlador.gestor.GestorUsuarios;
 import ourProgramImprove.controlador.gestoresPojo.DaoCliente;
 import ourProgramImprove.modelo.Cliente;
 
@@ -27,7 +27,7 @@ public class Registro {
 	private JTextField Nombre;
 	private JTextField PrimerApellido;
 	private JTextField SegundoApellido;
-	//private JDateChooser FechaNac;
+	// private JDateChooser FechaNac;
 
 	private static JLabel JLabelDni;
 	private static JLabel JLabelPassUno;
@@ -35,7 +35,7 @@ public class Registro {
 	private static JLabel JLabelNombre;
 	private static JLabel JLabelPrimerApellido;
 	private static JLabel JLabelSegundoApellido;
-	//private static JLabel JLabelFechaNac;
+	// private static JLabel JLabelFechaNac;
 	private PanelTransparente panelTransparente;
 
 	public Registro() {
@@ -135,7 +135,7 @@ public class Registro {
 			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				GestorUsuarios gestorUsuario = new GestorUsuarios();
 				if (Dni.getText().isBlank() == true || Nombre.getText().isBlank() == true
 						|| PassUno.getText().isBlank() == true || PrimerApellido.getText().isBlank() == true
 						|| SegundoApellido.getText().isBlank() == true) {
@@ -143,9 +143,9 @@ public class Registro {
 					JOptionPane.showMessageDialog(null, "Rellene todos los campos");
 				} else {
 
-					if (comprobarDni(Dni.getText().trim()) == false) {
+					if (gestorUsuario.comprobarDni(Dni.getText().trim()) == false) {
 
-						if (comprobarPass(PassUno.getText().trim()) == false) {
+						if (gestorUsuario.comprobarPass(PassUno.getText().trim()) == false) {
 
 							cliente.setDni(Dni.getText().trim());
 							cliente.setNombre(Nombre.getText().trim());
@@ -154,7 +154,7 @@ public class Registro {
 							cliente.setApellidoDos(SegundoApellido.getText().trim());
 							// cliente.setFechaNac((FechaNac).getDate());
 
-							if (comprobarCliente(cliente) == true) {
+							if (gestorUsuario.comprobarCliente(cliente) == true) {
 								JOptionPane.showMessageDialog(null, " El DNI ya se encuentra registrado.");
 							} else {
 
@@ -193,97 +193,6 @@ public class Registro {
 		});
 		panelRegistro.add(btnVolver);
 		return panelRegistro;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-	// TODO MOVER METODO A ALGUNA CLASE GESTOR
-	private boolean comprobarDni(String dni) {
-
-		boolean error = false;
-
-		char[] abecedario = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q',
-				'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-
-		if (dni.length() == 9) {
-
-			for (int i = 0; i < dni.length(); i++) {
-				if ((Character.isDigit(dni.charAt(i)) == true) && (i < 8)) {
-					error = false;
-				} else if (i == 8) {
-					break;
-				} else {
-					error = true;
-				}
-			}
-
-			if (error == false) {
-
-				for (int j = 0; j < abecedario.length; j++) {
-
-					if (Character.toUpperCase(dni.charAt(8)) == abecedario[j]) {
-						error = false;
-						break;
-					} else {
-						error = true;
-					}
-				}
-			}
-		} else {
-
-			error = true;
-		}
-
-		return error;
-	}
-
-	// TODO MOVER A CLASE GESTOR
-	private boolean comprobarPass(String pass) {
-
-		boolean error = false;
-		int passLenght = pass.length();
-		if (passLenght < 8) {
-			error = true;
-		}
-		return error;
-	}
-
-	// TODO MOVER A CLASE GESTOR
-	private boolean comprobarCliente(Cliente clientePantalla) {
-
-		DaoCliente daoCliente = new DaoCliente();
-		Boolean existe = false;
-		ArrayList<Cliente> arrayListUsuario = new ArrayList<Cliente>();
-		try {
-			arrayListUsuario = daoCliente.listarUsuarios();
-		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "ClassNotFound");
-		}
-
-		for (int i = 0; i < arrayListUsuario.size(); i++) {
-			Cliente cliente = arrayListUsuario.get(i);
-			if (clientePantalla.getDni().equals(cliente.getDni())) {
-
-				existe = true;
-				break;
-			}
-		}
-
-		return existe;
-
 	}
 
 }
